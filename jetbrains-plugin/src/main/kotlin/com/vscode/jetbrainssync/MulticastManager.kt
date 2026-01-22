@@ -159,7 +159,8 @@ class MulticastManager(
                 log.info("使用网络接口: ${networkInterface!!.displayName}")
 
                 // 创建组播套接字
-                multicastSocket = MulticastSocket(multicastPort)
+                // 明确绑定到回环地址，与 VSCode 插件保持一致，并提高安全性
+                multicastSocket = MulticastSocket(InetSocketAddress(InetAddress.getByName("127.0.0.1"), multicastPort))
                 multicastSocket!!.reuseAddress = true
                 multicastSocket!!.networkInterface = networkInterface
 
@@ -278,7 +279,12 @@ class MulticastManager(
      * 发送消息到组播组
      */
     fun sendMessage(messageWrapper: MessageWrapper): Boolean {
-        if (!isConnected() || !autoReconnect.get()) {
+        // 如果未开启自动重连（功能被禁用），则直接忽略且不记录警告
+        if (!autoReconnect.get()) {
+            return false
+        }
+
+        if (!isConnected()) {
             log.warn("当前未连接，丢弃消息: ${messageWrapper.toJsonString()}")
             return false
         }
