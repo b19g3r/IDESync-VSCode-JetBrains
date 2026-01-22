@@ -186,6 +186,7 @@ export class MulticastManager {
         try {
             // 优先使用回环接口
             this.socket.addMembership(this.multicastAddress, '127.0.0.1');
+            this.socket.setMulticastInterface('127.0.0.1'); 
             this.setConnectionState(ConnectionState.CONNECTED);
             this.logger.info(`成功加入组播组（回环接口）: ${this.multicastAddress}:${this.multicastPort}`);
         } catch (error) {
