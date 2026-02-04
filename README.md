@@ -4,6 +4,24 @@
 
 A **decentralized synchronization system** based on **multicast technology** that enables seamless real-time synchronization between multiple VSCode, JetBrains IDE instances simultaneously. Compatible with VSCode forks (Cursor, Windsurf) and JetBrains IntelliJ-based IDEs (Rider, IntelliJ IDEA, WebStorm, PyCharm, etc.). No central server required - all IDEs communicate directly with each other in a peer-to-peer fashion.
 
+---
+
+## What's New / 最新更新
+
+### v1.5.x
+
+**New Features / 新功能:**
+- **📁 Workspace Path Sync / 工作空间路径同步**: Synchronizes workspace/project paths between IDEs for better context awareness. / 在 IDE 之间同步工作空间/项目路径，提供更好的上下文感知能力。
+
+**Bug Fixes / 问题修复:**
+- **🔧 Fixed JetBrains → VSCode multicast sync / 修复 JetBrains → VSCode 组播同步**: VSCode now correctly receives multicast messages from JetBrains by binding to all interfaces. / VSCode 现在通过绑定到所有接口来正确接收来自 JetBrains 的组播消息。
+
+**Improvements / 改进:**
+- **⚡ Multicast Manager Optimization / 组播管理器优化**: Improved multicast implementation for better reliability. / 改进组播实现以提高可靠性。
+- **🔄 Dependencies Update / 依赖更新**: Updated VSCode extension dependencies and JetBrains plugin configuration. / 更新了 VSCode 扩展依赖和 JetBrains 插件配置。
+
+---
+
 ## Key Features
 
 -   **🔄 Decentralized Architecture**: No central server - direct peer-to-peer communication via multicast
