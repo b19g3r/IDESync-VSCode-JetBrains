@@ -10,6 +10,7 @@ A **decentralized synchronization system** based on **multicast technology** tha
 -   **📂 File Operations Sync**: Real-time file opening and closing synchronization across all connected IDEs
 -   **🎯 Cursor & Selection Sync**: Live cursor position and code selection synchronization with precise line/column accuracy
 -   **🔄 Focus Compensation**: Full workspace synchronization when window loses focus, ensuring other IDEs receive the latest state
+-   **📁 Workspace Path Sync**: Synchronizes workspace/project paths between IDEs for better context awareness
 -   **🔗 Multi-Instance Support**: Connect unlimited VSCode and JetBrains IDE instances simultaneously
 -   **⚡ Zero Configuration**: Automatic discovery and connection of IDE instances on the same network, with seamless departure from the network
 
