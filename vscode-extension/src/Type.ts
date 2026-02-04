@@ -47,6 +47,7 @@ export class EditorState {
     public selectionStartColumn?: number;  // 选中开始列号（从0开始）
     public selectionEndLine?: number;      // 选中结束行号（从0开始）
     public selectionEndColumn?: number;    // 选中结束列号（从0开始）
+    public workspacePaths?: string[];      // 发送方的工作区路径列表
 
     // 平台兼容路径缓存
     private _compatiblePath?: string;
@@ -63,7 +64,8 @@ export class EditorState {
         selectionStartLine?: number,
         selectionStartColumn?: number,
         selectionEndLine?: number,
-        selectionEndColumn?: number
+        selectionEndColumn?: number,
+        workspacePaths?: string[]
     ) {
         this.action = action;
         this.filePath = filePath;
@@ -77,6 +79,7 @@ export class EditorState {
         this.selectionStartColumn = selectionStartColumn;
         this.selectionEndLine = selectionEndLine;
         this.selectionEndColumn = selectionEndColumn;
+        this.workspacePaths = workspacePaths;
     }
 
     /**
@@ -367,7 +370,8 @@ export class MessageWrapper {
                 data.payload.selectionStartLine,
                 data.payload.selectionStartColumn,
                 data.payload.selectionEndLine,
-                data.payload.selectionEndColumn
+                data.payload.selectionEndColumn,
+                data.payload.workspacePaths
             );
 
             return new MessageWrapper(

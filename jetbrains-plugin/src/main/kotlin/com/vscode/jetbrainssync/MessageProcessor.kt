@@ -12,7 +12,8 @@ import java.util.concurrent.atomic.AtomicBoolean
  */
 class MessageProcessor(
     private val fileOperationHandler: FileOperationHandler,
-    private val localIdentifierManager: LocalIdentifierManager
+    private val localIdentifierManager: LocalIdentifierManager,
+    private val project: com.intellij.openapi.project.Project
 ) {
     private val log: Logger = Logger.getInstance(MessageProcessor::class.java)
     private val gson = Gson()
@@ -192,6 +193,36 @@ class MessageProcessor(
         val currentTime = System.currentTimeMillis()
         if (currentTime - messageTime > messageTimeOutMs) { // 5秒过期
             log.info("忽略过期消息，时间差: ${currentTime - messageTime}ms")
+            return false
+        }
+
+        // 检查文件是否在当前项目内
+        if (!isFileInCurrentProject(state)) {
+            return false
+        }
+
+        return true
+    }
+
+    /**
+     * 检查消息中的文件是否在当前项目内
+     * @param state 编辑器状态
+     * @return 如果文件在当前项目内返回 true，否则返回 false
+     */
+    private fun isFileInCurrentProject(state: EditorState): Boolean {
+        val filePath = state.filePath
+
+        // 空文件路径（如 WORKSPACE_SYNC 无活跃编辑器）不做过滤
+        if (filePath.isEmpty()) {
+            return true
+        }
+
+        // 获取兼容的文件路径
+        val compatiblePath = state.getCompatiblePath()
+
+        // 检查文件是否在当前项目内
+        if (!WorkspaceUtils.isFileInProject(project, compatiblePath)) {
+            log.debug("忽略非当前项目的文件: $compatiblePath")
             return false
         }
 

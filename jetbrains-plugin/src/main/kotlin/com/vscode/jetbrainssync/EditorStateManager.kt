@@ -65,7 +65,8 @@ class EditorStateManager(
             selectionStartLine = selectionCoordinates?.first,
             selectionStartColumn = selectionCoordinates?.second,
             selectionEndLine = selectionCoordinates?.third,
-            selectionEndColumn = selectionCoordinates?.fourth
+            selectionEndColumn = selectionCoordinates?.fourth,
+            workspacePaths = WorkspaceUtils.getWorkspacePaths(project)
         )
     }
 
@@ -80,7 +81,13 @@ class EditorStateManager(
             column = 0,
             source = SourceType.JETBRAINS,
             isActive = isActive,
-            timestamp = formatTimestamp()
+            timestamp = formatTimestamp(),
+            openedFiles = null,
+            selectionStartLine = null,
+            selectionStartColumn = null,
+            selectionEndLine = null,
+            selectionEndColumn = null,
+            workspacePaths = WorkspaceUtils.getWorkspacePaths(project)
         )
     }
 
@@ -106,7 +113,8 @@ class EditorStateManager(
                 selectionStartLine = null,
                 selectionStartColumn = null,
                 selectionEndLine = null,
-                selectionEndColumn = null
+                selectionEndColumn = null,
+                workspacePaths = WorkspaceUtils.getWorkspacePaths(project)
             )
         } else {
             // 没有活跃编辑器时，使用空的文件路径和位置
@@ -122,7 +130,8 @@ class EditorStateManager(
                 selectionStartLine = null,
                 selectionStartColumn = null,
                 selectionEndLine = null,
-                selectionEndColumn = null
+                selectionEndColumn = null,
+                workspacePaths = WorkspaceUtils.getWorkspacePaths(project)
             )
         }
     }

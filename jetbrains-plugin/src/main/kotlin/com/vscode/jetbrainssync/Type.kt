@@ -52,7 +52,8 @@ data class EditorState(
     val selectionStartLine: Int? = null,    // 选中开始行号（从0开始）
     val selectionStartColumn: Int? = null,  // 选中开始列号（从0开始）
     val selectionEndLine: Int? = null,      // 选中结束行号（从0开始）
-    val selectionEndColumn: Int? = null     // 选中结束列号（从0开始）
+    val selectionEndColumn: Int? = null,    // 选中结束列号（从0开始）
+    val workspacePaths: List<String>? = null  // 发送方的工作区路径列表
 ) {
     // 平台兼容路径缓存
     @Transient

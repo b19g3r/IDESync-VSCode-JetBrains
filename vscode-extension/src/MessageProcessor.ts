@@ -2,6 +2,7 @@ import {EditorState, MessageWrapper, parseTimestamp} from './Type';
 import {Logger} from './Logger';
 import {FileOperationHandler} from './FileOperationHandler';
 import {LocalIdentifierManager} from './LocalIdentifierManager';
+import {WorkspaceUtils} from './WorkspaceUtils';
 
 /**
  * 消息处理器
@@ -210,6 +211,36 @@ export class MessageProcessor {
         const currentTime = Date.now();
         if (currentTime - messageTime > this.messageTimeoutMs) { // 5秒过期
             this.logger.info(`忽略过期消息，时间差: ${currentTime - messageTime}ms`);
+            return false;
+        }
+
+        // 检查文件是否在当前工作区内
+        if (!this.isFileInCurrentWorkspace(state)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * 检查消息中的文件是否在当前工作区内
+     * @param state 编辑器状态
+     * @returns 如果文件在当前工作区内返回 true，否则返回 false
+     */
+    private isFileInCurrentWorkspace(state: EditorState): boolean {
+        const filePath = state.filePath;
+
+        // 空文件路径（如 WORKSPACE_SYNC 无活跃编辑器）不做过滤
+        if (!filePath) {
+            return true;
+        }
+
+        // 获取兼容的文件路径
+        const compatiblePath = state.getCompatiblePath();
+
+        // 检查文件是否在当前工作区内
+        if (!WorkspaceUtils.isFileInWorkspace(compatiblePath)) {
+            this.logger.debug(`忽略非当前工作区的文件: ${compatiblePath}`);
             return false;
         }
 

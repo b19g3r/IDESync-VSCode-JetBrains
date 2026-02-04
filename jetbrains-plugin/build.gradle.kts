@@ -99,4 +99,9 @@ tasks {
             freeCompilerArgs = listOf("-Xjvm-default=all")
         }
     }
+
+    compileJava {
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
+    }
 } 

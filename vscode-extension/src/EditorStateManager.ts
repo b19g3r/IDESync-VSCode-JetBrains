@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import {ActionType, EditorState, formatTimestamp, SourceType} from './Type';
 import {Logger} from "./Logger";
 import {FileUtils} from './FileUtils';
+import {WorkspaceUtils} from './WorkspaceUtils';
 
 /**
  * 编辑器状态管理器
@@ -52,7 +53,8 @@ export class EditorStateManager {
             selectionCoordinates?.startLine,
             selectionCoordinates?.startColumn,
             selectionCoordinates?.endLine,
-            selectionCoordinates?.endColumn
+            selectionCoordinates?.endColumn,
+            WorkspaceUtils.getWorkspacePaths()
         );
     }
 
@@ -64,7 +66,13 @@ export class EditorStateManager {
             0,
             SourceType.VSCODE,
             isActive,
-            formatTimestamp()
+            formatTimestamp(),
+            undefined, // openedFiles
+            undefined, // selectionStartLine
+            undefined, // selectionStartColumn
+            undefined, // selectionEndLine
+            undefined, // selectionEndColumn
+            WorkspaceUtils.getWorkspacePaths()
         );
     }
 
@@ -83,7 +91,13 @@ export class EditorStateManager {
             0,
             SourceType.VSCODE,
             isActive,
-            formatTimestamp()
+            formatTimestamp(),
+            undefined, // openedFiles
+            undefined, // selectionStartLine
+            undefined, // selectionStartColumn
+            undefined, // selectionEndLine
+            undefined, // selectionEndColumn
+            WorkspaceUtils.getWorkspacePaths()
         );
     }
 
@@ -105,7 +119,12 @@ export class EditorStateManager {
                 SourceType.VSCODE,
                 isActive,
                 formatTimestamp(),
-                openedFiles
+                openedFiles,
+                undefined, // selectionStartLine
+                undefined, // selectionStartColumn
+                undefined, // selectionEndLine
+                undefined, // selectionEndColumn
+                WorkspaceUtils.getWorkspacePaths()
             );
         } else {
             // 没有活跃编辑器时，使用空的文件路径和位置
@@ -117,7 +136,12 @@ export class EditorStateManager {
                 SourceType.VSCODE,
                 isActive,
                 formatTimestamp(),
-                openedFiles
+                openedFiles,
+                undefined, // selectionStartLine
+                undefined, // selectionStartColumn
+                undefined, // selectionEndLine
+                undefined, // selectionEndColumn
+                WorkspaceUtils.getWorkspacePaths()
             );
         }
     }
