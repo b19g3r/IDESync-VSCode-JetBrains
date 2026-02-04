@@ -213,18 +213,19 @@ export class MulticastManager {
 
     /**
      * 绑定套接字到端口
+     * 注意：绑定到所有接口以接收组播包，安全性通过 addMembership 和 setMulticastInterface 控制
      */
     private bindSocket(): void {
         if (!this.socket) return;
 
         try {
-            // 优先绑定到回环地址
-            this.socket.bind(this.multicastPort, '127.0.0.1', () => {
-                this.logger.info(`绑定到回环地址端口: 127.0.0.1:${this.multicastPort}`);
+            // 绑定到所有接口以接收组播包
+            this.socket.bind(this.multicastPort, () => {
+                this.logger.info(`绑定到端口: ${this.multicastPort}`);
             });
         } catch (bindError) {
-            this.logger.warn('绑定到回环地址失败，尝试绑定到默认地址:', bindError as Error);
-            this.tryBindToDefaultAddress();
+            this.logger.warn('绑定端口失败:', bindError as Error);
+            this.handleConnectionError();
         }
     }
 
